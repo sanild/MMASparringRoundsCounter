@@ -13,6 +13,9 @@ class TimerService {
   Function(int, bool)? _updateCallback;
   final AudioPlayer _audioPlayer = AudioPlayer();
 
+  // A flag to cancel the countdown
+  bool _cancelCountdown = false;
+
   void startTimer(
     int totalRounds,
     int roundDuration,
@@ -25,9 +28,15 @@ class TimerService {
     _updateCallback = updateCallback;
     _currentRound = 1;
     _isResting = false;
+    
+    // Reset the cancel flag before starting
+    _cancelCountdown = false;
 
     // Play countdown audio at 3 and show countdown
     await _playCountdown();
+    
+    // If the countdown was cancelled, don't proceed to start the timer.
+    if (_cancelCountdown) return;
 
     _remainingTime = _roundDuration;
     _updateCallback!(_currentRound, _isResting);
@@ -37,8 +46,7 @@ class TimerService {
         _remainingTime--;
       } else {
         if (!_isResting) {
-          // If it's the end of a round and there are more rounds,
-          // transition into the rest period.
+          // If it's the end of a round and there are more rounds, transition to rest.
           if (_currentRound < _totalRounds) {
             _isResting = true;
             _remainingTime = _restDuration;
@@ -62,22 +70,28 @@ class TimerService {
 
   Future<void> _playCountdown() async {
     for (int i = 3; i >= 1; i--) {
+      if (_cancelCountdown) return; // Exit early if cancelled
       _timerStreamController.add(i.toString());
       if (i == 3) {
         await _audioPlayer.play(AssetSource('audio/initialTimerAudio.wav'));
       }
       await Future.delayed(Duration(seconds: 1));
     }
+    if (_cancelCountdown) return; // Check again before finishing
     _timerStreamController.add("FIGHT");
     await _audioPlayer.play(AssetSource('audio/buzzer.wav'));
   }
 
   void stopTimer() {
     _timer?.cancel();
+    _cancelCountdown = true;
+    _audioPlayer.stop(); // Stop any playing audio
   }
 
   void resetTimer() {
     _timer?.cancel();
+    _cancelCountdown = true;
+    _audioPlayer.stop(); // Stop any playing audio
     _remainingTime = 0;
     _timerStreamController.add(_formatTime(_remainingTime));
   }
