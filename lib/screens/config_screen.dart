@@ -60,7 +60,7 @@ class _ConfigScreenState extends State<ConfigScreen> {
       constraints: BoxConstraints.expand(),
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: AssetImage("assets/images/background.jpg"),
+          image: AssetImage("assets/images/background-large.jpg"),
           fit: BoxFit.cover,
         ),
       ),

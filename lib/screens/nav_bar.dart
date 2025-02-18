@@ -73,9 +73,9 @@ class NavBar extends StatelessWidget {
                   },
                 ),
                 ListTile(
-                  leading: Icon(CupertinoIcons.person_crop_circle, color: Colors.white, size: 30),
+                  leading: Icon(CupertinoIcons.info_circle_fill, color: Colors.white, size: 30),
                   title: const Text(
-                    'About me',
+                    'About',
                     style: TextStyle(fontSize: 18, color: Colors.white),
                   ),
                   onTap: () {

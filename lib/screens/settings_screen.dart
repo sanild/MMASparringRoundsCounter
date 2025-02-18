@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import '../providers/settings_provider.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -23,35 +24,50 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final settings = Provider.of<SettingsProvider>(context, listen: false);
+    final settings = Provider.of<SettingsProvider>(context);
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 30, 30, 30),
       appBar: AppBar(
-        title: const Text("Settings", style: TextStyle(color: Colors.white, fontSize: 18)),
         backgroundColor: const Color.fromARGB(255, 30, 30, 30),
+        iconTheme: const IconThemeData(color: Colors.white),
       ),
       body: Column(
         children: [
-          // Expanded scrollable content.
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 16.0),
+            child: Column(
+              children: [
+                Image(
+                  image: AssetImage("assets/images/pain au chocolat.png"),
+                  height: 150,
+                ),
+                const SizedBox(height: 8),
+                const Divider(
+                  color: Colors.white,
+                  thickness: 0.3,
+                  indent: 1,
+                  endIndent: 1,
+                ),
+              ],
+            ),
+          ),
+          // Expanded scrollable settings content.
           Expanded(
             child: SingleChildScrollView(
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 9.0,
+                vertical: 2.0,
+              ),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Header for General Settings
-                  const Text(
-                    "General",
-                    style: TextStyle(
-                      fontSize: 24,
-                      color: Colors.white,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  const SizedBox(height: 12),
                   // Dark Mode Setting
                   ListTile(
-                    leading: const Icon(Icons.dark_mode, color: Colors.white, size: 30),
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 0.0),
+                    leading: const Icon(
+                      Icons.dark_mode,
+                      color: Colors.white,
+                      size: 30,
+                    ),
                     title: const Text(
                       "Dark Mode",
                       style: TextStyle(fontSize: 18, color: Colors.white),
@@ -66,11 +82,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           });
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
-                              content: Text("Sorry, dark mode is permanently on."),
+                              content: Text(
+                                "Sorry, light mode isn't there yet.",
+                              ),
                             ),
                           );
                           // Wait briefly so the switch shows off.
-                          await Future.delayed(const Duration(milliseconds: 300));
+                          await Future.delayed(
+                            const Duration(milliseconds: 300),
+                          );
                           // Revert back to on.
                           setState(() {
                             _darkModeSwitch = true;
@@ -88,7 +108,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                   // Full Screen Setting
                   ListTile(
-                    leading: const Icon(Icons.fullscreen, color: Colors.white, size: 30),
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 0.0),
+                    leading: const Icon(
+                      Icons.fullscreen,
+                      color: Colors.white,
+                      size: 30,
+                    ),
                     title: const Text(
                       "Full Screen",
                       style: TextStyle(fontSize: 18, color: Colors.white),
@@ -100,7 +125,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                   // Vibration Setting
                   ListTile(
-                    leading: const Icon(Icons.vibration, color: Colors.white, size: 30),
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 0.0),
+                    leading: const Icon(
+                      Icons.vibration,
+                      color: Colors.white,
+                      size: 30,
+                    ),
                     title: const Text(
                       "Vibration",
                       style: TextStyle(fontSize: 18, color: Colors.white),
@@ -112,7 +142,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                   // Sounds Setting
                   ListTile(
-                    leading: const Icon(Icons.volume_up, color: Colors.white, size: 30),
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 0.0),
+                    leading: const Icon(
+                      Icons.volume_up,
+                      color: Colors.white,
+                      size: 30,
+                    ),
                     title: const Text(
                       "Sounds",
                       style: TextStyle(fontSize: 18, color: Colors.white),
@@ -124,7 +159,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                   // Notifications Setting
                   ListTile(
-                    leading: const Icon(Icons.notifications, color: Colors.white, size: 30),
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 0.0),
+                    leading: const Icon(
+                      Icons.notifications,
+                      color: Colors.white,
+                      size: 30,
+                    ),
                     title: const Text(
                       "Notifications",
                       style: TextStyle(fontSize: 18, color: Colors.white),
@@ -145,24 +185,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
               children: [
                 const Text(
                   'v 1.00',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 14,
-                  ),
+                  style: TextStyle(color: Colors.white, fontSize: 14),
                 ),
                 const SizedBox(height: 4),
                 RichText(
-                  text: TextSpan(
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 14,
-                    ),
+                  text: const TextSpan(
+                    style: TextStyle(color: Colors.white, fontSize: 14),
                     children: [
-                      const TextSpan(text: "Made in Montreal with "),
+                      TextSpan(text: "Made in Montreal with "),
                       WidgetSpan(
                         child: Icon(
                           Icons.favorite,
-                          color: const Color(0xFFFF1744),
+                          color: Color(0xFFFF1744),
                           size: 14,
                         ),
                       ),

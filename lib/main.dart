@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'providers/settings_provider.dart';
-import 'screens/splash_screen.dart';
 import 'screens/config_screen.dart';
 
 void main() {
@@ -13,9 +12,20 @@ void main() {
   );
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+  
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
 
+class _MyAppState extends State<MyApp> {
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    precacheImage(const AssetImage("assets/images/background-large.jpg"), context);
+  }
+  
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
